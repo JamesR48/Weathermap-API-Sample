@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+#Cuando se crea una app hay que agregarla a la lista para ser usada por Django
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'openweather.apps.OpenweatherConfig',
 ]
 
 MIDDLEWARE = [
