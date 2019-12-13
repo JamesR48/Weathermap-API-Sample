@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" /> <!--Referencia a Bootstrap para facilitar el desarrollo del front end-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <title>OpenWeather Test App</title>
 </head>
 <body>
@@ -19,8 +19,7 @@
         </div>
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4" align="center" style="background-color: aquamarine">
-                <!--Referencia al API de OpenWeather para tomar íconos-->
-                <!--Aquí se usan los datos adquiridos del API en el script "views.py"-->
+
                 <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Image" width="120" height="120">
                 <span style="font-size:60px;"><strong>{{ weather.temperature }} &#xB0;C</strong></span>
                 <br>
@@ -29,9 +28,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4" align="center" style="background-color: darkgray">
-                <p>WITH BOOTSTRAP</p>
+            {% for city_info in next_data %}
+            <div class="col-sm-2" style="background-color:darkgray;width: 130px;margin: 10px; margin-top:0px;">
+                
+                <p class="text-center">
+                <img src="http://openweathermap.org/img/wn/{{ city_info.icon }}@2x.png" alt="Image" width="90" height="90">
+                <span>{{city_info.temperature}} &#xB0;C</span>
+                <br>
+                <span>{{ city_info.speed }} m/s ,</span>
+                <br>
+                <span>{{ city_info.pressure }}</span>
+                </p>
             </div>
+            {% endfor %}
         </div>
     </div>
 </body>

@@ -10,7 +10,10 @@ import requests #Se instala esta librería para poder llamar APIs en la app
 def index(request):
 	currentWeather_url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=5fec5a0ae12df556297c8080de1a434a' #Para utilizar el current API de OpenWeather
 	# en unidades métricas y con el API Key gratuito que se adquiere al registrarse en OpenWeather
-	city = "Valledupar"
+	nextDays_url = 'http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&appid=5fec5a0ae12df556297c8080de1a434a' #Para utilizar el 5 days forecast API
+	#no se usa el API de 16 days forecast por lo que solo funciona para suscripciones pagas. La desventaja del 5 days forecast es que da el clima cada 3horas
+	#entonces no coincidirían siempre el current con la información del 5 days
+	city = "valledupar"
 	weather_info = requests.get(currentWeather_url.format(city)).json() #Se envía el request a la URL con una ciudad y recibe los datos en JSON de esa ciudad
 	# se pasan a JSON por lo que este tipo de objetos son facilmente representados como diccionarios y listas en Python
 	#Se crea un diccionario para pasar los datos que se requieran al template para que el usuario los vea
@@ -19,8 +22,22 @@ def index(request):
 		'temperature' : weather_info['main']['temp'],
 		'description' : weather_info['weather'][0]['description'], 
 		'icon' : weather_info['weather'][0]['icon'],
-	}
-	# 'main' es un diccionario y 'weather' una lista de 1 solo objeto
-	context = {'weather' : weather}
+	}# 'main' es un diccionario y 'weather' una lista de 1 solo objeto
+	
+	next_data = [] #se crea una lista vacía en donde se almacenarán los datos de los siguientes días
+	#Se usa un for loop por lo que se tomarán más de 1 dato en este caso
+
+	for i in range(6):
+		nextWeather_info = requests.get(nextDays_url.format(city)).json()
+		next_weather = {
+			'temperature' : nextWeather_info['list'][i]['main']['temp'],
+			'speed' : nextWeather_info['list'][i]['wind']['speed'],
+			'pressure' : nextWeather_info['list'][i]['main']['pressure'],
+			'icon' : nextWeather_info['list'][i]['weather'][0]['icon'],
+		}
+		next_data.append(next_weather)
+	context = {'weather' : weather, 'next_data' : next_data}
+	print(context)
 	#context es un diccionario de valores para agregar al template a través de la función render. Por defecto viene vacío
-	return render(request,'openweather/index.html', context) #retorna el template en el index.html
+	#retorna el template en el index.html
+	return render(request,'openweather/index.html', context) 
