@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <title>OpenWeather Test App</title>
+    <style>
+        .row-space-1 {margin-top: 1em}
+        .row-space-3{margin-top: 3em}
+    </style>
 </head>
 <body>
     <div class="container" >
-        <div class="row">
-            <div class="col-sm-4" style="background-color: darkorange">
+        <div class="row row-space-1">
+            <div class="col-sm-4" style="background-color: darkorange; width: 100%;">
                 <h1 style="color:white; font-weight:900; font-size: 40px">How's the weather?</h1>
                 <form>
                     <input class="input" name="city" type="text" placeholder="City's name">
@@ -17,8 +21,8 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-4" align="center" style="background-color: aquamarine">
+        <div class="row row-space-3">
+            <div class="col-sm-4 col-sm-offset-4" align="center">
 
                 <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Image" width="120" height="120">
                 <span style="font-size:60px;"><strong>{{ weather.temperature }} &#xB0;C</strong></span>
@@ -27,19 +31,33 @@
                 <p>{{ weather.description }}</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row row-space-3">
             {% for city_info in next_data %}
-            <div class="col-sm-2" style="background-color:darkgray;width: 130px;margin: 10px; margin-top:0px;">
-                
+            {% if forloop.first %}
+            <div class="col-sm-2" style="background-color:lightgray; width: 130px; margin-left: 3em" >
                 <p class="text-center">
-                <img src="http://openweathermap.org/img/wn/{{ city_info.icon }}@2x.png" alt="Image" width="90" height="90">
-                <span>{{city_info.temperature}} &#xB0;C</span>
-                <br>
-                <span>{{ city_info.speed }} m/s ,</span>
-                <br>
-                <span>{{ city_info.pressure }}</span>
+                    <img src="http://openweathermap.org/img/wn/{{ city_info.icon }}@2x.png" alt="Image" width="90" height="90">
+                    <br>
+                    <span>{{city_info.temperature}}&#xB0;C</span>
+                    <br>
+                    <span>{{ city_info.speed }} m/s ,</span>
+                    <br>
+                    <span>{{ city_info.pressure }}</span>
                 </p>
             </div>
+            {% else %}
+            <div class="col-sm-2">
+                <p class="text-center">
+                    <img src="http://openweathermap.org/img/wn/{{ city_info.icon }}@2x.png" alt="Image" width="90" height="90">
+                    <br>
+                    <span>{{city_info.temperature}}&#xB0;C</span>
+                    <br>
+                    <span>{{ city_info.speed }} m/s ,</span>
+                    <br>
+                    <span>{{ city_info.pressure }}</span>
+                </p>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
