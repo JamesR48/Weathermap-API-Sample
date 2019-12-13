@@ -43,7 +43,6 @@ def index(request):
 		}
 		next_data.append(next_weather)
 	context = {'weather' : weather, 'next_data' : next_data}
-	print(context)
 	#context es un diccionario de valores para agregar al template a través de la función render. Por defecto viene vacío
 	#retorna el template en el index.html
 	return render(request,'openweather/index.html', context) 
