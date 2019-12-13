@@ -9,17 +9,27 @@
 <body>
     <div class="container" >
         <div class="row">
-            <div class="col-sm-4" style="background-color: aquamarine">
-                <p>HELLO</p>
+            <div class="col-sm-4" style="background-color: darkorange">
+                <h1 style="color:white; font-weight:900; font-size: 40px">How's the weather?</h1>
+                <form>
+                    <input class="input" name="city" type="text" placeholder="City's name">
+                    <button type="submit"> Search </button>
+                </form>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4" style="background-color: blueviolet">
-                <p>WORLD</p>
+            <div class="col-sm-4 col-sm-offset-4" align="center" style="background-color: aquamarine">
+                <!--Referencia al API de OpenWeather para tomar íconos-->
+                <!--Aquí se usan los datos adquiridos del API en el script "views.py"-->
+                <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Image" width="120" height="120">
+                <span style="font-size:60px;"><strong>{{ weather.temperature }} &#xB0;C</strong></span>
+                <br>
+                <p>{{ weather.city }}</p>
+                <p>{{ weather.description }}</p>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4" style="background-color: cadetblue">
+            <div class="col-sm-4 col-sm-offset-4" align="center" style="background-color: darkgray">
                 <p>WITH BOOTSTRAP</p>
             </div>
         </div>
